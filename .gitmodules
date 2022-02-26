@@ -1,0 +1,3 @@
+[submodule "tmux/.tmux/plugins/tmux-nova"]
+	path = tmux/.tmux/plugins/tmux-nova
+	url = git@github.com:o0th/tmux-nova.git
