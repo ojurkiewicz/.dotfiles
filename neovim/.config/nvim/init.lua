@@ -42,7 +42,10 @@ require('packer').startup(function()
 	use 'sbdchd/neoformat'
 	use("petertriho/nvim-scrollbar")
   use("preservim/nerdtree")
+  use("nvim-lualine/lualine.nvim")
 end)
+
+require "user.lualine"
 
 vim.o.expandtab = true
 vim.o.tabstop = 2
@@ -91,11 +94,12 @@ vim.cmd([[augroup fmt
 augroup END]])
 
 --Set statusbar
-vim.g.lightline = {
-  colorscheme = 'powerline',
-  active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
-  component_function = { gitbranch = 'fugitive#head' },
-}
+-- vim.g.lightline = {
+--   colorscheme = 'powerline',
+--   active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
+--   component_function = { gitbranch = 'fugitive#head' },
+-- }
+
 vim.api.nvim_command('set noshowmode')
 
 --Remap space as leader key
@@ -121,11 +125,11 @@ vim.api.nvim_exec(
 -- Gitsigns
 require('gitsigns').setup {
   signs = {
-    add = { hl = 'GitGutterAdd', text = '+' },
-    change = { hl = 'GitGutterChange', text = '~' },
-    delete = { hl = 'GitGutterDelete', text = '_' },
-    topdelete = { hl = 'GitGutterDelete', text = '‾' },
-    changedelete = { hl = 'GitGutterChange', text = '~' },
+    add = { hl = 'GitSignsAdd', text = '+' },
+    change = { hl = 'GitSignsChange', text = '~' },
+    delete = { hl = 'GitSignsDelete', text = '契' },
+    topdelete = { hl = 'GitSignsDelete', text = '契' },
+    changedelete = { hl = 'GitSignsChange', text = '~' },
   },
 }
 

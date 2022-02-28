@@ -109,6 +109,11 @@ _G.packer_plugins = {
     path = "/Users/oktawianjurkiewicz/.local/share/nvim/site/pack/packer/start/neoformat",
     url = "https://github.com/sbdchd/neoformat"
   },
+  nerdtree = {
+    loaded = true,
+    path = "/Users/oktawianjurkiewicz/.local/share/nvim/site/pack/packer/start/nerdtree",
+    url = "https://github.com/preservim/nerdtree"
+  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/Users/oktawianjurkiewicz/.local/share/nvim/site/pack/packer/start/nvim-cmp",
@@ -167,5 +172,6 @@ if should_profile then save_profiles() end
 end)
 
 if not no_errors then
+  error_msg = error_msg:gsub('"', '\\"')
   vim.api.nvim_command('echohl ErrorMsg | echom "Error in packer_compiled: '..error_msg..'" | echom "Please check your config for correctness" | echohl None')
 end
