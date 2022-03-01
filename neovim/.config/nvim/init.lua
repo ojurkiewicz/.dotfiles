@@ -5,6 +5,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
+
 vim.api.nvim_exec(
   [[
   augroup Packer
@@ -19,14 +20,9 @@ local use = require('packer').use
 require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
   use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
-  -- UI to select things (files, grep results, open buffers...)
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use 'ellisonleao/gruvbox.nvim'
-	--use 'ojurkiewicz/gruvbox.nvim'
-  use 'itchyny/lightline.vim' -- Fancier statusline
-  -- Add indentation guides even on blank lines
- -- use 'lukas-reineke/indent-blankline.nvim'
-  -- Add git related info in the signs columns and popups
+  -- use 'itchyny/lightline.vim' -- Fancier statusline
   use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   -- Highlight, edit, and navigate code using a fast incremental parsing library
   use 'nvim-treesitter/nvim-treesitter'
@@ -43,6 +39,7 @@ require('packer').startup(function()
 	use("petertriho/nvim-scrollbar")
   use("preservim/nerdtree")
   use("nvim-lualine/lualine.nvim")
+
 end)
 
 require "user.lualine"
@@ -86,19 +83,16 @@ vim.o.termguicolors = true
 vim.o.background = "dark" -- or "light" for light mode
 vim.cmd([[colorscheme gruvbox]])
 
+require('onedark').setup {
+    style = 'warmer'
+}
+
 vim.o.tabstop = 2;
 
 vim.cmd([[augroup fmt
   autocmd!
   autocmd BufWritePre * undojoin | Neoformat
 augroup END]])
-
---Set statusbar
--- vim.g.lightline = {
---   colorscheme = 'powerline',
---   active = { left = { { 'mode', 'paste' }, { 'gitbranch', 'readonly', 'filename', 'modified' } } },
---   component_function = { gitbranch = 'fugitive#head' },
--- }
 
 vim.api.nvim_command('set noshowmode')
 
@@ -442,9 +436,6 @@ require('diffview').setup({
     },
   },
 })
-
--- REST	
-vim.api.nvim_set_keymap('n', '<Leader>rr', [[<cmd>lua require'rest-nvim'.run()<cr>]], {noremap = true, silent = true})
 
 -- Scrollbar
 require("scrollbar").setup({  
