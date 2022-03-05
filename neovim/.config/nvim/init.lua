@@ -5,7 +5,6 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
-
 vim.api.nvim_exec(
   [[
   augroup Packer
@@ -39,10 +38,15 @@ require('packer').startup(function()
 	use("petertriho/nvim-scrollbar")
   use("preservim/nerdtree")
   use("nvim-lualine/lualine.nvim")
-
+  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+  use({
+	"catppuccin/nvim",
+	as = "catppuccin"
+    })
 end)
 
 require "user.lualine"
+require "user.neogit"
 
 vim.o.expandtab = true
 vim.o.tabstop = 2
@@ -81,11 +85,7 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
-
-require('onedark').setup {
-    style = 'warmer'
-}
+vim.cmd([[colorscheme catppuccin]])
 
 vim.o.tabstop = 2;
 
@@ -95,6 +95,17 @@ vim.cmd([[augroup fmt
 augroup END]])
 
 vim.api.nvim_command('set noshowmode')
+
+-- Keep screen centered when going through search results
+vim.api.nvim_set_keymap('n', 'n', 'nzzzv', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', { noremap = true, silent = true })
+
+-- Moving text around
+vim.cmd([[noremap J :m '>+1<CR>gv=gv]])
+vim.cmd([[noremap K :m '<-2<CR>gv=gv]])
+
+-- jk as ESC. Just trying it out for now
+vim.cmd([[imap jk <Esc>]]) 
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })

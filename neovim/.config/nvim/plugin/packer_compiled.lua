@@ -69,6 +69,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  catppuccin = {
+    loaded = true,
+    path = "/Users/oktawianjurkiewicz/.local/share/nvim/site/pack/packer/start/catppuccin",
+    url = "https://github.com/catppuccin/nvim"
+  },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "/Users/oktawianjurkiewicz/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
@@ -94,11 +99,6 @@ _G.packer_plugins = {
     path = "/Users/oktawianjurkiewicz/.local/share/nvim/site/pack/packer/start/harpoon",
     url = "https://github.com/ThePrimeagen/harpoon"
   },
-  ["lightline.vim"] = {
-    loaded = true,
-    path = "/Users/oktawianjurkiewicz/.local/share/nvim/site/pack/packer/start/lightline.vim",
-    url = "https://github.com/itchyny/lightline.vim"
-  },
   ["lsp_signature.nvim"] = {
     loaded = true,
     path = "/Users/oktawianjurkiewicz/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
@@ -113,6 +113,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/oktawianjurkiewicz/.local/share/nvim/site/pack/packer/start/neoformat",
     url = "https://github.com/sbdchd/neoformat"
+  },
+  neogit = {
+    loaded = true,
+    path = "/Users/oktawianjurkiewicz/.local/share/nvim/site/pack/packer/start/neogit",
+    url = "https://github.com/TimUntersberger/neogit"
   },
   nerdtree = {
     loaded = true,
@@ -148,11 +153,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/oktawianjurkiewicz/.local/share/nvim/site/pack/packer/start/nvim-ts-rainbow",
     url = "https://github.com/p00f/nvim-ts-rainbow"
-  },
-  ["onedark.nvim"] = {
-    loaded = true,
-    path = "/Users/oktawianjurkiewicz/.local/share/nvim/site/pack/packer/start/onedark.nvim",
-    url = "https://github.com/navarasu/onedark.nvim"
   },
   ["packer.nvim"] = {
     loaded = true,
