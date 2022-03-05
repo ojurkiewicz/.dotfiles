@@ -1,7 +1,5 @@
 eval "$(starship init zsh)"
 
-source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 alias ls="exa"
 alias cat="bat"
 alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
