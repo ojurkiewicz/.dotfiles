@@ -1,0 +1,4 @@
+shell:
+  program: /bin/zsh
+font:
+  size: 15
