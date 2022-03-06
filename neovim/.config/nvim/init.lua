@@ -14,7 +14,7 @@ vim.api.nvim_exec(
 ]],
   false
 )
-        
+
 local use = require('packer').use
 require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
@@ -43,10 +43,12 @@ require('packer').startup(function()
 	"catppuccin/nvim",
 	as = "catppuccin"
     })
+  use("L3MON4D3/LuaSnip")
+  use("tpope/vim-fugitive")
 end)
 
 require "user.lualine"
-require "user.neogit"
+--require "user.neogit"
 
 vim.o.expandtab = true
 vim.o.tabstop = 2
@@ -85,7 +87,7 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme catppuccin]])
+vim.cmd([[colorscheme gruvbox]])
 
 vim.o.tabstop = 2;
 
@@ -105,7 +107,7 @@ vim.cmd([[noremap J :m '>+1<CR>gv=gv]])
 vim.cmd([[noremap K :m '<-2<CR>gv=gv]])
 
 -- jk as ESC. Just trying it out for now
-vim.cmd([[imap jk <Esc>]]) 
+vim.cmd([[imap jk <Esc>]])
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
@@ -144,8 +146,6 @@ require('telescope').setup {
   defaults = {
     mappings = {
       i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
 				["<esc>"] = actions.close,
       },
     },
@@ -279,13 +279,23 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'svelte', 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
+local servers = { 'svelte', 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
   }
 end
+
+nvim_lsp.sumneko_lua.setup{
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { 'vim' }
+            }
+        }
+    }
+}
 
 require "lsp_signature".setup({
   floating_window = false,
@@ -296,7 +306,7 @@ require "lsp_signature".setup({
 vim.o.completeopt = 'menuone,noselect'
 
 -- luasnip setup
--- local luasnip = require 'luasnip'
+local luasnip = require 'luasnip'
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
@@ -317,15 +327,15 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    -- ['<Tab>'] = function(fallback)
-    --   if cmp.visible() then
-    --     cmp.select_next_item()
-    --   elseif luasnip.expand_or_jumpable() then
-    --     luasnip.expand_or_jump()
-    --   else
-    --     fallback()
-    --   end
-    -- end,
+    ['<Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end,
     ['<S-Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -449,7 +459,7 @@ require('diffview').setup({
 })
 
 -- Scrollbar
-require("scrollbar").setup({  
+require("scrollbar").setup({
 				handle = {
 								color = "#333333"
 				},
@@ -461,10 +471,4 @@ require("scrollbar").setup({
         Hint = { text = { "−", "▄" }, priority = 4, color = "#99be83" },
         Misc = { text = { "−", "▄" }, priority = 5, color = "purple" }
     }})
-
--- test   
-vim.cmd([[au VimEnter * highlight DiffAdd guifg=NONE guibg=#383924]])
-vim.cmd([[highlight DiffChange guifg=NONE guibg=#2e372a]])
-vim.cmd([[highlight DiffDelete guifg=NONE guibg=#3e1f1e]])
-vim.cmd([[highlight DiffText guifg=NONE guibg=#3d341f]])
 
