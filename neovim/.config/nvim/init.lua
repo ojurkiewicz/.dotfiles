@@ -21,7 +21,6 @@ require('packer').startup(function()
   use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use 'ellisonleao/gruvbox.nvim'
-  -- use 'itchyny/lightline.vim' -- Fancier statusline
   use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   -- Highlight, edit, and navigate code using a fast incremental parsing library
   use 'nvim-treesitter/nvim-treesitter'
@@ -38,17 +37,12 @@ require('packer').startup(function()
 	use("petertriho/nvim-scrollbar")
   use("preservim/nerdtree")
   use("nvim-lualine/lualine.nvim")
-  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
-  use({
-	"catppuccin/nvim",
-	as = "catppuccin"
-    })
   use("L3MON4D3/LuaSnip")
   use("tpope/vim-fugitive")
+  use("folke/tokyonight.nvim")
 end)
 
 require "user.lualine"
---require "user.neogit"
 
 vim.o.expandtab = true
 vim.o.tabstop = 2
@@ -87,7 +81,7 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme tokyonight]])
 
 vim.o.tabstop = 2;
 
@@ -115,8 +109,8 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 --Remap for dealing with word wrap
-vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
-vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
+-- vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
+-- vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
 
 -- Highlight on yank
 vim.api.nvim_exec(
@@ -279,7 +273,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'svelte', 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua' }
+local servers = { 'svelte', 'eslint', 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
