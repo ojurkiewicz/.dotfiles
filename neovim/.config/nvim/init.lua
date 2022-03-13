@@ -112,6 +112,10 @@ vim.g.maplocalleader = ' '
 -- vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
 -- vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
 
+vim.api.nvim_set_keymap('n', '<leader>ww', [[<cmd>:w<CR>]], { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>wq', [[<cmd>:wq<CR>]], { noremap = true })
+
+
 -- Highlight on yank
 vim.api.nvim_exec(
   [[
@@ -128,8 +132,8 @@ require('gitsigns').setup {
   signs = {
     add = { hl = 'GitSignsAdd', text = '+' },
     change = { hl = 'GitSignsChange', text = '~' },
-    delete = { hl = 'GitSignsDelete', text = '契' },
-    topdelete = { hl = 'GitSignsDelete', text = '契' },
+    delete = { hl = 'GitSignsDelete', text = '>' },
+    topdelete = { hl = 'GitSignsDelete', text = '>' },
     changedelete = { hl = 'GitSignsChange', text = '~' },
   },
 }
@@ -348,6 +352,10 @@ cmp.setup {
 
 -- Diffview config
 local cb = require'diffview.config'.diffview_callback
+
+-- Change lame dash dash sign to fancy diagonal
+local set = vim.opt -- set options
+set.fillchars = set.fillchars + 'diff:╱'
 
 require('diffview').setup({
   diff_binaries = false,    -- Show diffs for binaries

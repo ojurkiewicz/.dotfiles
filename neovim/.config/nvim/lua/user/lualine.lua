@@ -11,6 +11,7 @@ local diagnostics = {
 	"diagnostics",
 	sources = { "nvim_diagnostic", "nvim_lsp" },
 	sections = { "error", "warn", "info", "hint"},
+	symbols = { error = "ERR:", warn = "WARN:", info = "INFO:", hint ="HINT:" }, -- changes diff symbols
 	colored = true,
 	update_in_insert = true,
 	always_visible = false,
@@ -18,8 +19,8 @@ local diagnostics = {
 
 local diff = {
 	"diff",
-	colored = true,
-	--symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
+	colored = false,
+	symbols = { added = "+", modified = "~", removed = "-" }, -- changes diff symbols
   cond = hide_in_width
 }
 
@@ -39,17 +40,8 @@ local filetype = {
 local branch = {
 	"branch",
 	icons_enabled = true,
-	icon = "",
+	icon = "",
 }
-
-local location = {
-	"location",
-	padding = 0,
-}
-
-local spaces = function()
-	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
-end
 
 lualine.setup({
 	options = {
