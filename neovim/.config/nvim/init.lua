@@ -81,7 +81,7 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme tokyonight]])
+vim.cmd([[colorscheme gruvbox]])
 
 vim.o.tabstop = 2;
 
@@ -113,8 +113,11 @@ vim.g.maplocalleader = ' '
 -- vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<leader>ww', [[<cmd>:w<CR>]], { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>wq', [[<cmd>:wq<CR>]], { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>wq', [[<cmd>:bd<CR>]], { noremap = true })
 
+
+-- NERDtree keymaps
+vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>:NERDTreeToggle<CR>]], { noremap = true })
 
 -- Highlight on yank
 vim.api.nvim_exec(
