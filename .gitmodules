@@ -1,6 +1,6 @@
 [submodule "tmux/.tmux/plugins/tmux-nova"]
 	path = tmux/.tmux/plugins/tmux-nova
 	url = git@github.com:o0th/tmux-nova.git
-[submodule "tmux/.tmux/plugins/tmux-resurrect"]
-	path = tmux/.tmux/plugins/tmux-resurrect
+[submodule "tmux/.tmux/plugins/tmux-ressurect"]
+	path = tmux/.tmux/plugins/tmux-ressurect
 	url = git@github.com:tmux-plugins/tmux-resurrect.git
