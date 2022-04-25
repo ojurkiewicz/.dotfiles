@@ -39,7 +39,6 @@ require('packer').startup(function()
   use("nvim-lualine/lualine.nvim")
   use("L3MON4D3/LuaSnip")
   use("tpope/vim-fugitive")
-  use "rebelot/kanagawa.nvim"
   use {'nvim-orgmode/orgmode', config = function()
         require('orgmode').setup{}
         end
@@ -155,7 +154,8 @@ require('telescope').setup {
       },
     },
     file_ignore_patterns = {
-	"node_modules"
+	    "node_modules",
+      ".git"
     }
   },
 }
@@ -177,13 +177,13 @@ require'nvim-treesitter.configs'.setup {
 }
 
 require('orgmode').setup({
-  org_agenda_files = {'~/Dropbox/org/*'},
+  org_agenda_files = {'~/Dropbox/org/inbox.org','~/Dropbox/org/gtd.org','~/Dropbox/org/tickler.org'},
   org_default_notes_file = '~/Dropbox/org/inbox.org',
 })
 
 --Add leader shortcuts
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files({previewer = false, hidden = true})<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], { noremap = true, silent = true })
