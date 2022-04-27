@@ -1,3 +1,5 @@
+export PATH=~/.npm-global/bin:$PATH
+
 eval "$(starship init zsh)"
 
 alias ls="exa"
@@ -6,6 +8,3 @@ alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
