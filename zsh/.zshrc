@@ -1,4 +1,6 @@
 export PATH=~/.npm-global/bin:$PATH
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 eval "$(starship init zsh)"
 
