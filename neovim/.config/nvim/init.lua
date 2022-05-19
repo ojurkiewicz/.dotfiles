@@ -39,7 +39,7 @@ require('packer').startup(function()
   use("nvim-lualine/lualine.nvim")
   use("L3MON4D3/LuaSnip")
   use("tpope/vim-fugitive")
-use "EdenEast/nightfox.nvim"
+use "folke/tokyonight.nvim"
   use {'nvim-orgmode/orgmode', config = function()
         require('orgmode').setup{}
         end
@@ -85,7 +85,7 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme tokyonight]])
 
 vim.o.tabstop = 2;
 
