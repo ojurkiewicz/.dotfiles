@@ -6,6 +6,7 @@ eval "$(starship init zsh)"
 
 alias ls="exa"
 alias cat="bat"
+alias tt="~/tmux-sessionizer"
 alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 
 export NVM_DIR="$HOME/.nvm"
