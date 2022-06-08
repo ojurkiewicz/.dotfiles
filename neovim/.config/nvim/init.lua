@@ -104,7 +104,14 @@ vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', { noremap = true, silent = true })
 vim.cmd([[noremap J :m '>+1<CR>gv=gv]])
 vim.cmd([[noremap K :m '<-2<CR>gv=gv]])
 
--- jk as ESC. Just trying it out for now
+-- Auto-closing brackets
+vim.cmd([[inoremap " ""<left>]])
+vim.cmd([[inoremap ' ''<left>]])
+vim.cmd([[inoremap ( ()<left>]])
+vim.cmd([[inoremap [ []<left>]])
+vim.cmd([[inoremap { {}<left>]])
+
+-- jk as ESC 
 vim.cmd([[imap jk <Esc>]])
 
 --Remap space as leader key
