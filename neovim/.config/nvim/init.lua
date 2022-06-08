@@ -85,7 +85,9 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme tokyonight]])
+vim.cmd([[let g:gruvbox_sign_column = '000000']])
+vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[highlight normal guibg=#000000]])
 
 vim.o.tabstop = 2;
 
