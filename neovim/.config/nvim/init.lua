@@ -38,6 +38,7 @@ require('packer').startup(function()
   use("preservim/nerdtree")
   use("nvim-lualine/lualine.nvim")
   use("L3MON4D3/LuaSnip")
+  use "github/copilot.vim"
   use("tpope/vim-fugitive")
 use "folke/tokyonight.nvim"
   use {'nvim-orgmode/orgmode', config = function()
@@ -91,10 +92,12 @@ vim.cmd([[highlight normal guibg=#000000]])
 
 vim.o.tabstop = 2;
 
-vim.cmd([[augroup fmt
+vim.cmd([[
+augroup fmt
   autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
-augroup END]])
+  au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
+augroup END
+]])
 
 vim.api.nvim_command('set noshowmode')
 
@@ -113,7 +116,14 @@ vim.cmd([[inoremap ( ()<left>]])
 vim.cmd([[inoremap [ []<left>]])
 vim.cmd([[inoremap { {}<left>]])
 
--- jk as ESC 
+vim.cmd([[xnoremap <leader>p "_dP]])
+vim.cmd([[nnoremap <leader>y "+y]])
+vim.cmd([[vnoremap <leader>y "+y]])
+vim.cmd([[nmap <leader>Y "+Y]])
+vim.cmd([[nnoremap <leader>d "_d]])
+vim.cmd([[vnoremap <leader>d "_d]])
+
+-- jk as ESC
 vim.cmd([[imap jk <Esc>]])
 
 --Remap space as leader key
@@ -365,15 +375,15 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end,
+    -- ['<Tab>'] = function(fallback)
+    --   if cmp.visible() then
+    --     cmp.select_next_item()
+    --   elseif luasnip.expand_or_jumpable() then
+    --     luasnip.expand_or_jump()
+    --   else
+    --     fallback()
+    --   end
+    -- end,
     ['<S-Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -441,7 +451,7 @@ require('diffview').setup({
     -- The `view` bindings are active in the diff buffers, only when the current
     -- tabpage is a Diffview.
     view = {
-      ["<tab>"]      = cb("select_next_entry"),  -- Open the diff for the next file
+      -- ["<tab>"]      = cb("select_next_entry"),  -- Open the diff for the next file
       ["<s-tab>"]    = cb("select_prev_entry"),  -- Open the diff for the previous file
       ["gf"]         = cb("goto_file"),          -- Open the file in a new split in previous tabpage
       ["<C-w><C-f>"] = cb("goto_file_split"),    -- Open the file in a new split
@@ -485,7 +495,7 @@ require('diffview').setup({
       ["<cr>"]          = cb("select_entry"),
       ["o"]             = cb("select_entry"),
       ["<2-LeftMouse>"] = cb("select_entry"),
-      ["<tab>"]         = cb("select_next_entry"),
+      -- ["<tab>"]         = cb("select_next_entry"),
       ["<s-tab>"]       = cb("select_prev_entry"),
       ["gf"]            = cb("goto_file"),
       ["<C-w><C-f>"]    = cb("goto_file_split"),
@@ -494,7 +504,7 @@ require('diffview').setup({
       ["<leader>b"]     = cb("toggle_files"),
     },
     option_panel = {
-      ["<tab>"] = cb("select"),
+      -- ["<tab>"] = cb("select"),
       ["q"]     = cb("close"),
     },
   },
