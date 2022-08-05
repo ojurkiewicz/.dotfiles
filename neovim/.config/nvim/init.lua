@@ -27,7 +27,7 @@ require('packer').startup(function()
   use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   -- Highlight, edit, and navigate code using a fast incremental parsing library
   use 'nvim-treesitter/nvim-treesitter'
-  -- Additional textobjects for treesitter
+ -- Additional textobjects for treesitter
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
   use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
@@ -43,10 +43,16 @@ require('packer').startup(function()
   use("L3MON4D3/LuaSnip")
   use "github/copilot.vim"
   use("tpope/vim-fugitive")
-use "folke/tokyonight.nvim"
-  use {'nvim-orgmode/orgmode', config = function()
-        require('orgmode').setup{}
+  use "folke/tokyonight.nvim"
+  use {'nvim-orgmode/orgmode',
+        config = function()
+          require('orgmode').setup{}
         end
+      }
+  use { 'kyazdani42/nvim-tree.lua',
+        requires = {
+          'kyazdani42/nvim-web-devicons', -- optional, for file icons
+        },
       }
 end)
 
@@ -143,7 +149,7 @@ vim.api.nvim_set_keymap('n', '<leader>wq', [[<cmd>:bd<CR>]], { noremap = true })
 
 
 -- NERDtree keymaps
-vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>:NERDTreeToggle<CR>]], { noremap = true })
+-- vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>:NERDTreeToggle<CR>]], { noremap = true })
 
 -- Highlight on yank
 vim.api.nvim_exec(
@@ -426,3 +432,23 @@ require("scrollbar").setup({
         Misc = { text = { "−", "▄" }, priority = 5, color = "purple" }
     }})
 
+
+require("nvim-tree").setup({
+  sort_by = "case_sensitive",
+  view = {
+    adaptive_size = true,
+    mappings = {
+      list = {
+        { key = "u", action = "dir_up" },
+      },
+    },
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    custom = { "^.git$" }
+  },
+})
+
+vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>:NvimTreeToggle<CR>]], { noremap = true })
