@@ -126,7 +126,7 @@ vim.cmd([[inoremap [ []<left>]])
 vim.cmd([[inoremap { {}<left>]])
 
 vim.cmd([[xnoremap <leader>p "_dP]])
-vim.cmd([[nnoremap <leader>y "+y]])
+vim.cmd([[noremap <leader>y "+y]])
 vim.cmd([[vnoremap <leader>y "+y]])
 vim.cmd([[nmap <leader>Y "+Y]])
 vim.cmd([[nnoremap <leader>d "_d]])
@@ -449,6 +449,19 @@ require("nvim-tree").setup({
   filters = {
     custom = { "^.git$" }
   },
+  git = {
+    ignore = false,
+  },
+  actions = {
+    open_file = {
+      window_picker = {
+        enable = false
+      }
+    },
+  }
+
 })
 
 vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>:NvimTreeToggle<CR>]], { noremap = true })
+
+vim.cmd [[set list listchars=tab:>\ ,trail:-,eol:↲]]
