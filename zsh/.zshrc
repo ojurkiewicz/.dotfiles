@@ -12,6 +12,10 @@ alias cat="bat"
 alias tt="~/tmux-sessionizer"
 alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 
+gch() {
+ git checkout $(git branch -r | fzf)
+}
+
 # Save command history
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
