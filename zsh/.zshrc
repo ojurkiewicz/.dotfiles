@@ -13,7 +13,7 @@ alias tt="~/tmux-sessionizer"
 alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 
 gch() {
- git checkout $(git branch -r | fzf)
+ git checkout $(git branch | fzf) && git fetch
 }
 
 # Save command history
