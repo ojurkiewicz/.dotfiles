@@ -20,6 +20,7 @@ vim.cmd[[imap <silent><script><expr> <C-L> copilot#Next()]]
 vim.cmd[[imap <silent><script><expr> <C-H> copilot#Previous()]]
 vim.cmd[[let g:copilot_no_tab_map = v:true]]
 
+
 local use = require('packer').use
 require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
@@ -100,6 +101,7 @@ vim.o.background = "dark" -- or "light" for light mode
 vim.cmd([[let g:gruvbox_sign_column = '000000']])
 vim.cmd([[colorscheme gruvbox]])
 vim.cmd([[highlight normal guibg=#000000]])
+vim.cmd([[hi SignColumn guibg=#000000]])
 
 vim.o.tabstop = 2;
 
@@ -121,11 +123,11 @@ vim.cmd([[noremap J :m '>+1<CR>gv=gv]])
 vim.cmd([[noremap K :m '<-2<CR>gv=gv]])
 
 -- Auto-closing brackets
-vim.cmd([[inoremap " ""<left>]])
-vim.cmd([[inoremap ' ''<left>]])
-vim.cmd([[inoremap ( ()<left>]])
-vim.cmd([[inoremap [ []<left>]])
-vim.cmd([[inoremap { {}<left>]])
+vim.api.nvim_set_keymap('i', '"', '"<left>"', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '\'', '\'<left>\'', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '(', '()<left>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '[', '[]<left>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '{', '{}<left>', { noremap = true, silent = true })
 
 vim.cmd([[xnoremap <leader>p "_dP]])
 vim.cmd([[noremap <leader>y "+y]])
@@ -135,7 +137,7 @@ vim.cmd([[nnoremap <leader>d "_d]])
 vim.cmd([[vnoremap <leader>d "_d]])
 
 -- jk as ESC
-vim.cmd([[imap jk <Esc>]])
+vim.api.nvim_set_keymap('i', 'jk', '<Esc>', { noremap = true, silent = true })
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
@@ -146,9 +148,7 @@ vim.g.maplocalleader = ' '
 -- vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
 -- vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<leader>ww', [[<cmd>:w<CR>]], { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>wq', [[<cmd>:bd<CR>]], { noremap = true })
-
+vim.api.nvim_set_keymap('n', '<leader>w', "<cmd>:w<CR>", { noremap = true })
 
 -- NERDtree keymaps
 -- vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>:NERDTreeToggle<CR>]], { noremap = true })
@@ -207,11 +207,6 @@ require'nvim-treesitter.configs'.setup {
   },
   ensure_installed = {'org'}, -- Or run :TSUpdate org
 }
-
-require('orgmode').setup({
-  org_agenda_files = {'~/Dropbox/org/inbox.org','~/Dropbox/org/gtd.org','~/Dropbox/org/tickler.org'},
-  org_default_notes_file = '~/Dropbox/org/inbox.org',
-})
 
 --Add leader shortcuts
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
