@@ -20,7 +20,6 @@ vim.cmd[[imap <silent><script><expr> <C-L> copilot#Next()]]
 vim.cmd[[imap <silent><script><expr> <C-H> copilot#Previous()]]
 vim.cmd[[let g:copilot_no_tab_map = v:true]]
 
-
 local use = require('packer').use
 require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- Package manager
@@ -32,6 +31,7 @@ require('packer').startup(function()
   use 'nvim-treesitter/nvim-treesitter'
  -- Additional textobjects for treesitter
   use 'nvim-treesitter/nvim-treesitter-textobjects'
+  use 'nvim-treesitter/nvim-treesitter-context'
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
   use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
   use 'hrsh7th/cmp-nvim-lsp'
@@ -98,10 +98,11 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[let g:gruvbox_sign_column = '000000']])
 vim.cmd([[colorscheme gruvbox]])
 vim.cmd([[highlight normal guibg=#000000]])
 vim.cmd([[hi SignColumn guibg=#000000]])
+vim.cmd([[hi TreesitterContext guibg=#262626]])
+
 
 vim.o.tabstop = 2;
 
@@ -128,6 +129,11 @@ vim.api.nvim_set_keymap('i', '\'', '\'<left>\'', { noremap = true, silent = true
 vim.api.nvim_set_keymap('i', '(', '()<left>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '[', '[]<left>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '{', '{}<left>', { noremap = true, silent = true })
+
+-- Center screen on C-d and C-u
+vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
+
 
 vim.cmd([[xnoremap <leader>p "_dP]])
 vim.cmd([[noremap <leader>y "+y]])
@@ -460,3 +466,4 @@ require("nvim-tree").setup({
 })
 
 vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>:NvimTreeToggle<CR>]], { noremap = true })
+
