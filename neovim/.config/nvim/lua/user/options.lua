@@ -36,3 +36,6 @@ vim.o.termguicolors = true
 
 -- Set noshowmode
 vim.o.showmode = false
+
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = 'menuone,noselect'

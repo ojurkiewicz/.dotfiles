@@ -1,5 +1,4 @@
 local status_ok, nvim_tree = pcall(require, "nvim-tree")
-print(status_ok)
 if not status_ok then
   print("Nvimtree not found")
   return

@@ -10,6 +10,9 @@ local plugins = {
   ['nvim-lua/popup.nvim'] = {},
   ['nvim-lua/plenary.nvim'] = {},
   ['nvim-telescope/telescope.nvim'] = {
+    config = function()
+      require('plugins.telescope')
+    end,
     requires = {
       {'nvim-lua/popup.nvim'},
       {'nvim-lua/plenary.nvim'},
@@ -17,19 +20,28 @@ local plugins = {
   },
 
   -- LSP
-  ['neovim/nvim-lspconfig'] = {},
-  ['ray-x/lsp_signature.nvim'] = {},
+  ['neovim/nvim-lspconfig'] = {
+    config = function()
+      require('plugins.lsp')
+    end,
+  },
+  ['ray-x/lsp_signature.nvim'] = {
+    config = function()
+      require('plugins.lsp_signature')
+    end,
+  },
 
   -- Autocomplete
+  ['hrsh7th/nvim-cmp'] = {},
   ['hrsh7th/nvim-compe'] = {
     requires = {
       {'neovim/nvim-lspconfig'},
     },
   },
   ['hrsh7th/cmp-nvim-lsp'] = {
-    -- config = function()
-    --   require('plugins.cmp')
-    -- end,
+    config = function()
+      require('plugins.cmp')
+    end,
   },
   ['L3MON4D3/LuaSnip'] = {},
 
@@ -71,10 +83,17 @@ local plugins = {
   },
 
   -- Scrollbar
-  ['petertriho/nvim-scrollbar'] = {},
+  ['petertriho/nvim-scrollbar'] = {
+    config = function()
+      require('plugins.scrollbar')
+    end,
+  },
 
   -- Treesitter
   ['nvim-treesitter/nvim-treesitter'] = {
+    config = function()
+      require('plugins.treesitter')
+    end,
     run = ':TSUpdate',
   },
   ['nvim-treesitter/nvim-treesitter-textobjects'] = {},
@@ -86,7 +105,19 @@ local plugins = {
   ['sbdchd/neoformat'] = {},
 
   -- Harpoon
-  ['ThePrimeagen/harpoon'] = {},
+  ['ThePrimeagen/harpoon'] = {
+    config = function()
+      require('plugins.harpoon')
+    end,
+  },
+
+  -- Colorizer
+	["NvChad/nvim-colorizer.lua"] = {
+		config = function()
+			require("plugins.colorizer")
+		end,
+	},
+
 }
 
 -- Automatically install packer
@@ -135,10 +166,10 @@ if status_ok then
 				if type(key) == "string" and not plugin[1] then
 					plugin[1] = key
 				end
-				use(plugin)
 				if plugin['config'] then
 					plugin['config']()
 				end
+				use(plugin)
 			end
 		end,
 		config = {

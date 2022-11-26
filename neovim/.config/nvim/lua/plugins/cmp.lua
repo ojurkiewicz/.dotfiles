@@ -1,8 +1,13 @@
---- luasnip setup
-local luasnip = require 'luasnip'
+local status_ok_cmp, cmp = pcall(require, "cmp")
+if not status_ok_cmp then
+  return
+end
 
--- nvim-cmp setup
-local cmp = require 'cmp'
+local status_ok, luasnip = pcall(require, "luasnip")
+if not status_ok then
+  return
+end
+
 cmp.setup {
   snippet = {
     expand = function(args)
