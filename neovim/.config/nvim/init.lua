@@ -57,9 +57,19 @@ require('packer').startup(function()
           'kyazdani42/nvim-web-devicons', -- optional, for file icons
         },
       }
+  use 'f-person/git-blame.nvim'
+  use 'weirongxu/plantuml-previewer.vim'
+  use 'tyru/open-browser.vim'
+  use 'rose-pine/neovim'
 end)
 
 require "user.lualine"
+require "user.colorscheme"
+
+local git_blame = require('gitblame')
+
+vim.g.gitblame_date_format = '%Y-%m-%d';
+vim.g.gitblame_message_template = '<summary> • <date> • <author>';
 
 vim.o.expandtab = true
 vim.o.tabstop = 2
@@ -97,11 +107,11 @@ vim.wo.signcolumn = 'yes'
 
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
-vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
-vim.cmd([[highlight normal guibg=#000000]])
-vim.cmd([[hi SignColumn guibg=#000000]])
-vim.cmd([[hi TreesitterContext guibg=#262626]])
+-- vim.o.background = "dark" -- or "light" for light mode
+-- vim.cmd([[colorscheme gruvbox]])
+-- vim.cmd([[highlight normal guibg=#000000]])
+-- vim.cmd([[hi SignColumn guibg=#000000]])
+-- vim.cmd([[hi TreesitterContext guibg=#262626]])
 
 
 vim.o.tabstop = 2;
@@ -119,6 +129,10 @@ vim.api.nvim_command('set noshowmode')
 vim.api.nvim_set_keymap('n', 'n', 'nzzzv', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', { noremap = true, silent = true })
 
+-- With option+d run :PlantumlOpen
+vim.api.nvim_set_keymap('n', '∂', ':PlantumlOpen<CR>', { noremap = true, silent = true })
+
+
 -- Moving text around
 vim.cmd([[noremap J :m '>+1<CR>gv=gv]])
 vim.cmd([[noremap K :m '<-2<CR>gv=gv]])
@@ -134,11 +148,11 @@ vim.api.nvim_set_keymap('i', '{', '{}<left>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap('v', '<leader>y', '"+y', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>Y', '"+Y', { noremap = true, silent = true })
 
 vim.cmd([[xnoremap <leader>p "_dP]])
 vim.cmd([[noremap <leader>y "+y]])
-vim.cmd([[vnoremap <leader>y "+y]])
-vim.cmd([[nmap <leader>Y "+Y]])
 vim.cmd([[nnoremap <leader>d "_d]])
 vim.cmd([[vnoremap <leader>d "_d]])
 
@@ -191,10 +205,10 @@ require('telescope').setup {
       },
     },
     file_ignore_patterns = {
-	    "node_modules",
-      ".git",
-      "dist"
-    }
+	    "node_modules/",
+      ".git/",
+      "dist/"
+    },
   },
 }
 
@@ -336,7 +350,7 @@ end
 
 -- nvim-cmp supports additional completion capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Enable the following language servers
 local servers = { 'svelte', 'eslint', 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'gopls' }
