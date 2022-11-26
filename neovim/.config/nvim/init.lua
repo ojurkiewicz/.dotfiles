@@ -1,121 +1,59 @@
 -- Install packer
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+-- local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
-end
+-- if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+--   vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+-- end
 
-vim.api.nvim_exec(
-  [[
-  augroup Packer
-    autocmd!
-    autocmd BufWritePost init.lua PackerCompile
-  augroup end
-]],
-  false
-)
 
-vim.cmd[[imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")]]
-vim.cmd[[imap <silent><script><expr> <C-L> copilot#Next()]]
-vim.cmd[[imap <silent><script><expr> <C-H> copilot#Previous()]]
-vim.cmd[[let g:copilot_no_tab_map = v:true]]
-
-local use = require('packer').use
-require('packer').startup(function()
-  use 'wbthomason/packer.nvim' -- Package manager
-  use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
-  use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
-  use 'ellisonleao/gruvbox.nvim'
-  use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
-  -- Highlight, edit, and navigate code using a fast incremental parsing library
-  use 'nvim-treesitter/nvim-treesitter'
- -- Additional textobjects for treesitter
-  use 'nvim-treesitter/nvim-treesitter-textobjects'
-  use 'nvim-treesitter/nvim-treesitter-context'
-  use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
-  use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'ThePrimeagen/harpoon'
-  use 'p00f/nvim-ts-rainbow'
-  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
-	use 'ray-x/lsp_signature.nvim'
-	use 'sbdchd/neoformat'
-	use("petertriho/nvim-scrollbar")
-  use("preservim/nerdtree")
-  use("nvim-lualine/lualine.nvim")
-  use("L3MON4D3/LuaSnip")
-  use "github/copilot.vim"
-  use("tpope/vim-fugitive")
-  use "folke/tokyonight.nvim"
-  use {'nvim-orgmode/orgmode',
-        config = function()
-          require('orgmode').setup{}
-        end
-      }
-  use { 'kyazdani42/nvim-tree.lua',
-        requires = {
-          'kyazdani42/nvim-web-devicons', -- optional, for file icons
-        },
-      }
-  use 'f-person/git-blame.nvim'
-  use 'weirongxu/plantuml-previewer.vim'
-  use 'tyru/open-browser.vim'
-  use 'rose-pine/neovim'
-end)
-
+-- vim.api.nvim_exec(
+--   [[
+--   augroup Packer
+--     autocmd!
+--     autocmd BufWritePost init.lua PackerCompile
+--   augroup end
+-- ]],
+--   false
+-- )
 require "user.lualine"
+require "user.plugins"
 require "user.colorscheme"
+require "user.options"
+require "user.keymaps"
 
-local git_blame = require('gitblame')
-
-vim.g.gitblame_date_format = '%Y-%m-%d';
-vim.g.gitblame_message_template = '<summary> • <date> • <author>';
-
-vim.o.expandtab = true
-vim.o.tabstop = 2
-vim.o.softtabstop = 2
-vim.o.shiftwidth = 2
-
---Incremental live completion (note: this is now a default on master)
-vim.o.inccommand = 'nosplit'
-
---Set highlight on search
-vim.o.hlsearch = false
-
---Make line numbers default
-vim.wo.number = true
-
---Do not save when switching buffers (note: this is now a default on master)
-vim.o.hidden = true
-
---Enable mouse mode
-vim.o.mouse = 'a'
-
---Enable break indent
-vim.o.breakindent = true
-
---Save undo history
-vim.opt.undofile = true
-
---Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
---Decrease update time
-vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
-
---Set colorscheme (order is important here)
-vim.o.termguicolors = true
--- vim.o.background = "dark" -- or "light" for light mode
--- vim.cmd([[colorscheme gruvbox]])
--- vim.cmd([[highlight normal guibg=#000000]])
--- vim.cmd([[hi SignColumn guibg=#000000]])
--- vim.cmd([[hi TreesitterContext guibg=#262626]])
+-- local use = require('packer').use
+-- require('packer').startup(function()
+--   -- use 'wbthomason/packer.nvim' -- Package manager
+--   -- use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
+--   -- use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+--   -- use 'ellisonleao/gruvbox.nvim'
+--   -- use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+--   -- Highlight, edit, and navigate code using a fast incremental parsing library
+--   -- use 'nvim-treesitter/nvim-treesitter'
+--  -- -- Additional textobjects for treesitter
+--   -- use 'nvim-treesitter/nvim-treesitter-textobjects'
+--   -- use 'nvim-treesitter/nvim-treesitter-context'
+--   -- use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
+--   -- use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
+--   -- use 'hrsh7th/cmp-nvim-lsp'
+--   -- use 'ThePrimeagen/harpoon'
+--   use 'p00f/nvim-ts-rainbow'
+-- 	-- use 'ray-x/lsp_signature.nvim'
+-- 	-- use 'sbdchd/neoformat'
+-- 	-- use("petertriho/nvim-scrollbar")
+--   -- use("nvim-lualine/lualine.nvim")
+--   -- use "github/copilot.vim"
+--   -- use("tpope/vim-fugitive")
+--   -- use { 'kyazdani42/nvim-tree.lua',
+--   --       requires = {
+--   --         'kyazdani42/nvim-web-devicons', -- optional, for file icons
+--   --       },
+--   --     }
+--   -- use 'f-person/git-blame.nvim'
+-- end)
 
 
-vim.o.tabstop = 2;
-
+-- translate it to lua
 vim.cmd([[
 augroup fmt
   autocmd!
@@ -123,55 +61,6 @@ augroup fmt
 augroup END
 ]])
 
-vim.api.nvim_command('set noshowmode')
-
--- Keep screen centered when going through search results
-vim.api.nvim_set_keymap('n', 'n', 'nzzzv', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', { noremap = true, silent = true })
-
--- With option+d run :PlantumlOpen
-vim.api.nvim_set_keymap('n', '∂', ':PlantumlOpen<CR>', { noremap = true, silent = true })
-
-
--- Moving text around
-vim.cmd([[noremap J :m '>+1<CR>gv=gv]])
-vim.cmd([[noremap K :m '<-2<CR>gv=gv]])
-
--- Auto-closing brackets
-vim.api.nvim_set_keymap('i', '"', '"<left>"', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '\'', '\'<left>\'', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '(', '()<left>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '[', '[]<left>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '{', '{}<left>', { noremap = true, silent = true })
-
--- Center screen on C-d and C-u
-vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap('v', '<leader>y', '"+y', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<leader>Y', '"+Y', { noremap = true, silent = true })
-
-vim.cmd([[xnoremap <leader>p "_dP]])
-vim.cmd([[noremap <leader>y "+y]])
-vim.cmd([[nnoremap <leader>d "_d]])
-vim.cmd([[vnoremap <leader>d "_d]])
-
--- jk as ESC
-vim.api.nvim_set_keymap('i', 'jk', '<Esc>', { noremap = true, silent = true })
-
---Remap space as leader key
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
---Remap for dealing with word wrap
--- vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
--- vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
-
-vim.api.nvim_set_keymap('n', '<leader>w', "<cmd>:w<CR>", { noremap = true })
-
--- NERDtree keymaps
--- vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>:NERDTreeToggle<CR>]], { noremap = true })
 
 -- Highlight on yank
 vim.api.nvim_exec(
@@ -184,16 +73,6 @@ vim.api.nvim_exec(
   false
 )
 
--- Gitsigns
-require('gitsigns').setup {
-  signs = {
-    add = { hl = 'GitSignsAdd', text = '+' },
-    change = { hl = 'GitSignsChange', text = '~' },
-    delete = { hl = 'GitSignsDelete', text = '>' },
-    topdelete = { hl = 'GitSignsDelete', text = '>' },
-    changedelete = { hl = 'GitSignsChange', text = '~' },
-  },
-}
 
 -- Telescope
 local actions = require("telescope.actions")
@@ -212,11 +91,6 @@ require('telescope').setup {
   },
 }
 
--- Org mode
-
--- Load custom tree-sitter grammar for org filetype
-require('orgmode').setup_ts_grammar()
-
 -- Tree-sitter configuration
 require'nvim-treesitter.configs'.setup {
   -- If TS highlights are not enabled at all, or disabled via `disable` prop, highlighting will fallback to default Vim syntax highlighting
@@ -229,14 +103,6 @@ require'nvim-treesitter.configs'.setup {
 }
 
 --Add leader shortcuts
-vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files({previewer = false, hidden = true})<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sg', [[<cmd>lua require('telescope.builtin').git_status()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
 
 require("harpoon").setup({
     global_settings = {
@@ -246,15 +112,6 @@ require("harpoon").setup({
     },
 })
 
--- Harpoon shortcuts
-vim.api.nvim_set_keymap('n', '<leader>ha', [[<cmd>lua require("harpoon.mark").add_file()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>h1', [[<cmd>lua require("harpoon.ui").nav_file(1)<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>h2', [[<cmd>lua require("harpoon.ui").nav_file(2)<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>h3', [[<cmd>lua require("harpoon.ui").nav_file(3)<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>h4', [[<cmd>lua require("harpoon.ui").nav_file(4)<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>h5', [[<cmd>lua require("harpoon.ui").nav_file(5)<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>hh', [[<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>hq', [[<cmd>lua require("harpoon.tmux").gotoTerminal(1)<CR>]], { noremap = true, silent = true })
 
 -- Parsers must be installed manually via :TSInstall
 require('nvim-treesitter.configs').setup {
@@ -379,61 +236,10 @@ require "lsp_signature".setup({
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
--- luasnip setup
-local luasnip = require 'luasnip'
-
--- nvim-cmp setup
-local cmp = require 'cmp'
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end,
-    ['<S-Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end,
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  },
-}
-
--- Diffview config
-local cb = require'diffview.config'.diffview_callback
-
 -- Change lame dash dash sign to fancy diagonal
 local set = vim.opt -- set options
 set.fillchars = set.fillchars + 'diff:╱'
 
-require('diffview').setup()
 
 -- Scrollbar
 require("scrollbar").setup({
@@ -449,35 +255,4 @@ require("scrollbar").setup({
         Misc = { text = { "−", "▄" }, priority = 5, color = "purple" }
     }})
 
-
-require("nvim-tree").setup({
-  sort_by = "case_sensitive",
-  view = {
-    adaptive_size = true,
-    mappings = {
-      list = {
-        { key = "u", action = "dir_up" },
-      },
-    },
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    custom = { "^.git$" }
-  },
-  git = {
-    ignore = false,
-  },
-  actions = {
-    open_file = {
-      window_picker = {
-        enable = false
-      }
-    },
-  }
-
-})
-
-vim.api.nvim_set_keymap('n', '<leader>t', [[<cmd>:NvimTreeToggle<CR>]], { noremap = true })
 

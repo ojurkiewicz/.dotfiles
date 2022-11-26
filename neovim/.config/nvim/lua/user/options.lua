@@ -1,0 +1,38 @@
+vim.o.expandtab = true
+vim.o.tabstop = 2
+vim.o.softtabstop = 2
+vim.o.shiftwidth = 2
+
+--Incremental live completion (note: this is now a default on master)
+vim.o.inccommand = 'nosplit'
+
+--Set highlight on search
+vim.o.hlsearch = false
+
+--Make line numbers default
+vim.wo.number = true
+
+--Do not save when switching buffers (note: this is now a default on master)
+vim.o.hidden = true
+
+--Enable mouse mode
+vim.o.mouse = 'a'
+
+--Enable break indent
+vim.o.breakindent = true
+
+--Save undo history
+vim.opt.undofile = true
+
+--Case insensitive searching UNLESS /C or capital in search
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+--Decrease update time
+vim.o.updatetime = 250
+vim.wo.signcolumn = 'yes'
+
+vim.o.termguicolors = true
+
+-- Set noshowmode
+vim.o.showmode = false
