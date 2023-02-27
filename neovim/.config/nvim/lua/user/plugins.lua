@@ -118,6 +118,12 @@ local plugins = {
 		end,
 	},
 
+  ['tzachar/local-highlight.nvim'] = {
+      config = function()
+        require('plugins.local_highlight')
+      end,
+  },
+
 }
 
 -- Automatically install packer
