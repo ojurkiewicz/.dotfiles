@@ -125,6 +125,15 @@ local plugins = {
   },
 
   ['onsails/lspkind.nvim'] = {},
+
+  ['utilyre/barbecue.nvim'] = {
+    requires = {
+      "SmiteshP/nvim-navic",
+    },
+    config = function()
+      require("barbecue").setup()
+    end,
+  }
 }
 
 -- Automatically install packer
