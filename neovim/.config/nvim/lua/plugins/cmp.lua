@@ -8,11 +8,19 @@ if not status_ok then
   return
 end
 
+local status_ok_lspkind, lspkind = pcall(require, "lspkind")
+if not status_ok_lspkind then
+  return
+end
+
 cmp.setup {
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
+  },
+  formatting = {
+    format = lspkind.cmp_format({ maxwidth = 50}),
   },
   mapping = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),

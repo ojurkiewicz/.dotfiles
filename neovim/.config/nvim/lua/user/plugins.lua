@@ -119,11 +119,12 @@ local plugins = {
 	},
 
   ['tzachar/local-highlight.nvim'] = {
-      config = function()
-        require('plugins.local_highlight')
-      end,
+    config = function()
+      require('plugins.local_highlight')
+    end,
   },
 
+  ['onsails/lspkind.nvim'] = {},
 }
 
 -- Automatically install packer
