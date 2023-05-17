@@ -50,11 +50,11 @@ local plugins = {
   ['nvim-lualine/lualine.nvim'] = {},
 
   -- Copilot
-  ['github/copilot.vim'] = {
-    config = function()
-      require('plugins.copilot')
-    end,
-  },
+  -- ['github/copilot.vim'] = {
+  --   config = function()
+  --     require('plugins.copilot')
+  --   end,
+  -- },
 
   -- GIT 
   ['tpope/vim-fugitive'] = {},
@@ -126,14 +126,19 @@ local plugins = {
 
   ['onsails/lspkind.nvim'] = {},
 
-  ['utilyre/barbecue.nvim'] = {
-    requires = {
-      "SmiteshP/nvim-navic",
-    },
-    config = function()
-      require("barbecue").setup()
-    end,
-  }
+  -- ['utilyre/barbecue.nvim'] = {
+  --   requires = {
+  --     "SmiteshP/nvim-navic",
+  --   },
+  --   config = function()
+  --     require("barbecue").setup()
+  --   end,
+  -- },
+  -- use { "arturgoms/moonbow.nvim" }
+  ['arturgoms/moonbow.nvim'] = {},
+  
+  ['almo7aya/openingh.nvim'] = {}
+
 }
 
 -- Automatically install packer
