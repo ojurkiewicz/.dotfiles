@@ -67,3 +67,7 @@ vim.api.nvim_set_keymap('n', '<leader>h4', [[<cmd>lua require("harpoon.ui").nav_
 vim.api.nvim_set_keymap('n', '<leader>h5', [[<cmd>lua require("harpoon.ui").nav_file(5)<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>hh', [[<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>hq', [[<cmd>lua require("harpoon.tmux").gotoTerminal(1)<CR>]], { noremap = true, silent = true })
+
+
+-- Nvim DAP
+vim.api.nvim_set_keymap('n', '<leader>b', [[<cmd> lua require('dap').toggle_breakpoint()<CR>]], { noremap = true, silent = true })

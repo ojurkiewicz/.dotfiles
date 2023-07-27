@@ -1,6 +1,7 @@
 export PATH=~/.npm-global/bin:$PATH
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export FPATH=~/.zfunc:$FPATH
 
 # Auto-completion
 # ---------------
@@ -38,3 +39,29 @@ if [ -f '/Users/oktawian.jurkiewicz/google-cloud-sdk/path.zsh.inc' ]; then . '/U
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/oktawian.jurkiewicz/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/oktawian.jurkiewicz/google-cloud-sdk/completion.zsh.inc'; fi
 
+gch() {
+  git branch | grep -v "^\*" | fzf --height=20% --reverse --info=inline | xargs git checkout
+}
+
+_fzf_complete_kubectx() {
+  _fzf_complete --reverse --prompt="context name> " -- "$@" < <(
+    kubectl config get-contexts -o name
+  )
+}
+
+kubectx() {
+  kubectl config use-context $1
+}
+
+_fzf_complete_kubex() {
+  _fzf_complete --reverse --prompt="pod name> " -- "$@" < <(
+    kubectl get deploy -o json | jq '.items[] as $item | $item.spec.template.spec.containers[] as $c | "deploy/" + $item.metadata.name + " -c " + $c.name' | tr -d \"
+  )
+}
+
+
+kubex() {
+  kubectl exec -it ${@:1}
+}
+export MAGICK_HOME=/opt/homebrew/opt/imagemagick/
+export PATH="/opt/homebrew/opt/imagemagick/bin:$PATH"

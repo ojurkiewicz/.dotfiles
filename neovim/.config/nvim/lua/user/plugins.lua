@@ -3,6 +3,11 @@ local plugins = {
   -- Packer can manage itself
   ['wbthomason/packer.nvim'] = {},
 
+  ['folke/neodev.nvim'] = {
+    config = function()
+      require('plugins.neodev')
+    end,
+  },
   -- "gc" in visual mode to comment visual selection
   ['tpope/vim-commentary'] = {},
 
@@ -137,8 +142,27 @@ local plugins = {
   -- use { "arturgoms/moonbow.nvim" }
   ['arturgoms/moonbow.nvim'] = {},
   
-  ['almo7aya/openingh.nvim'] = {}
+  ['almo7aya/openingh.nvim'] = {},
+  ['mfussenegger/nvim-dap'] = {},
+  ['leoluz/nvim-dap-go'] = {
+    config = function()
+      require('plugins.nvim_dap_go')
+    end,
+  },
+  ['rcarriga/nvim-dap-ui'] = {
+    config = function()
+      require('plugins.nvim_dap_ui')
+    end,
+    requires = {{"mfussenegger/nvim-dap"}}
+  },
+  ['theHamsta/nvim-dap-virtual-text'] = {
+    config = function()
+      require('plugins.dap_virtual_text')
+    end,
+  },
 
+ 
+ 
 }
 
 -- Automatically install packer

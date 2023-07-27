@@ -6,7 +6,7 @@ util = require "lspconfig/util"
 
 local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  local signs = { Error = "❗️", Warn = "⚠️ ", Hint = "💡", Info = "ℹ️ " }
+  local signs = { Error = "", Warn = "", Hint = "", Info = "" }
   for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
