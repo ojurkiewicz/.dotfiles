@@ -3,7 +3,6 @@
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
-
 Kickstart.nvim is *not* a distribution.
 
 Kickstart.nvim is a template for your own configuration.
@@ -43,6 +42,12 @@ P.S. You can delete this when you're done too. It's your config now :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -71,7 +76,6 @@ require('lazy').setup({
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
    {
-    -- Theme inspired by Atom
     'arturgoms/moonbow.nvim',
     priority = 1000,
     config = function()
@@ -130,7 +134,7 @@ require('lazy').setup({
         add = { text = '+' },
         change = { text = '~' },
         delete = { text = '_' },
-        topdelete = { text = '‾' },
+        topdelete = { text = '_' },
         changedelete = { text = '~' },
       },
       on_attach = function(bufnr)
@@ -159,15 +163,6 @@ require('lazy').setup({
       end,
     },
   },
-
-  -- {
-  --   -- Theme inspired by Atom
-  --   'navarasu/onedark.nvim',
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme 'onedark'
-  --   end,
-  -- },
 
 
   {
@@ -235,7 +230,7 @@ require('lazy').setup({
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
   -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
@@ -243,7 +238,7 @@ require('lazy').setup({
   --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {})
 
 -- [[ Setting options ]]
@@ -533,8 +528,9 @@ mason_lspconfig.setup_handlers {
 -- See `:help cmp`
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
-require('luasnip.loaders.from_vscode').lazy_load()
+-- require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
+
 
 cmp.setup {
   snippet = {
@@ -577,7 +573,20 @@ cmp.setup {
   },
 }
 
+vim.api.nvim_set_keymap('i', 'jk', '<Esc>', {noremap = true})
+
+-- Press <Leader>e to toggle NvimTree
+vim.api.nvim_set_keymap('n', '<Leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+
+-- Harpoon shortcuts
+vim.api.nvim_set_keymap('n', '<leader>ha', [[<cmd>lua require("harpoon.mark").add_file()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>h1', [[<cmd>lua require("harpoon.ui").nav_file(1)<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>h2', [[<cmd>lua require("harpoon.ui").nav_file(2)<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>h3', [[<cmd>lua require("harpoon.ui").nav_file(3)<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>h4', [[<cmd>lua require("harpoon.ui").nav_file(4)<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>h5', [[<cmd>lua require("harpoon.ui").nav_file(5)<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>hh', [[<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>hq', [[<cmd>lua require("harpoon.tmux").gotoTerminal(1)<CR>]], { noremap = true, silent = true })
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-
-vim.api.nvim_set_keymap('i', 'jk', '<Esc>', {noremap = true})
