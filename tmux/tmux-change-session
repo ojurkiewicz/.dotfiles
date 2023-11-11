@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+session=$(tmux ls -F "#{session_name}" | fzf)
+
+tmux switch-client -t $session
