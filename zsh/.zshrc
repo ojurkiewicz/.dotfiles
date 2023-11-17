@@ -17,6 +17,7 @@ alias ls="exa"
 alias cat="bat"
 alias tt="~/tmux-sessionizer"
 alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
+alias lg="lazygit"
 
 gch() {
  git checkout $(git branch | fzf) && git fetch
