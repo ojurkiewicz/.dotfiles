@@ -227,6 +227,15 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -637,6 +646,9 @@ vim.api.nvim_set_keymap('n', '<leader>hh', [[<cmd>lua require("harpoon.ui").togg
   { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>hq', [[<cmd>lua require("harpoon.tmux").gotoTerminal(1)<CR>]],
   { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('x', '<', '<gv', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('x', '>', '>gv', {noremap = true, silent = true})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
