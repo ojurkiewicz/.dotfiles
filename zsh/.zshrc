@@ -66,3 +66,23 @@ kubex() {
 }
 export MAGICK_HOME=/opt/homebrew/opt/imagemagick/
 export PATH="/opt/homebrew/opt/imagemagick/bin:$PATH"
+export PATH="/usr/local/texlive/2021basic/bin/x86_64-darwin:$PATH"
+
+fpath=(/usr/local/share/zsh/site-functions $fpath)
+
+
+# Automatically activate Python virtual environments in the directory
+function workon_cwd {
+    if [ ! -d venv ]; then
+        deactivate 2>/dev/null || true
+        return
+    elif [ -f venv/bin/activate ]; then
+        source venv/bin/activate
+    fi
+}
+
+# Check the active directory whenever you navigate around
+add-zsh-hook chpwd workon_cwd
+
+# Initialize when shell starts 
+workon_cwd

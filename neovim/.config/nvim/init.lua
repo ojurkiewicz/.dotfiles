@@ -164,7 +164,14 @@ require('lazy').setup({
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    opts = {},
+    opts = {
+      on_colors = function(colors)
+        colors.bg = "#000000"
+        colors.bg_statusline = "#000000"
+        colors.bg_highlight = "#000000"
+        colors.bg_sidebar = "#000000"
+      end
+    },
   },
 
   {
