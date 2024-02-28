@@ -121,6 +121,7 @@ require('lazy').setup({
 
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim',  opts = {} },
+  { "sindrets/diffview.nvim" },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -198,7 +199,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',     opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -243,6 +244,7 @@ require('lazy').setup({
       -- refer to the configuration section below
     }
   },
+  { "stevanmilic/nvim-lspimport" },
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -393,7 +395,27 @@ end, { desc = '[/] Fuzzily search in current buffer' })
 
 vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>sf',
-  function() require('telescope.builtin').find_files({ hidden = true, find_command = { 'rg', '--files', '--hidden', '-g', '!.git' } }) end,
+  function()
+    require('telescope.builtin').find_files({
+      hidden = true,
+      find_command = {
+        'rg',
+        '--files',
+        '--hidden',
+        '--no-ignore',
+        '-g',
+        '!.git',
+        '-g',
+        '!node_modules',
+        '-g',
+        '!venv',
+        '-g',
+        '!__pycache__',
+        '-g',
+        '!*.pyc',
+      }
+    })
+  end,
   { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
@@ -654,8 +676,16 @@ vim.api.nvim_set_keymap('n', '<leader>hh', [[<cmd>lua require("harpoon.ui").togg
 vim.api.nvim_set_keymap('n', '<leader>hq', [[<cmd>lua require("harpoon.tmux").gotoTerminal(1)<CR>]],
   { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('x', '<', '<gv', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('x', '>', '>gv', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('x', '<', '<gv', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('x', '>', '>gv', { noremap = true, silent = true })
+
+vim.opt.fillchars:append { diff = " " }
+
+-- Press <Leader>t to toggle NvimTree
+vim.api.nvim_set_keymap('n', '<Leader>va', ':DiffviewOpen<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>vc', ':DiffviewClose<CR>', { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>cc", require("lspimport").import, { noremap = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
