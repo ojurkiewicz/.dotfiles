@@ -369,7 +369,25 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', function()
-        require('telescope.builtin').find_files { hidden = true, find_command = { 'rg', '--files', '--hidden', '-g', '!.git' } }
+        require('telescope.builtin').find_files {
+          hidden = true,
+          find_command = {
+            'rg',
+            '--files',
+            '--hidden',
+            '--no-ignore',
+            '-g',
+            '!.git',
+            '-g',
+            '!node_modules',
+            '-g',
+            '!venv',
+            '-g',
+            '!__pycache__',
+            '-g',
+            '!*.pyc',
+          },
+        }
       end, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
@@ -820,7 +838,8 @@ require('lazy').setup {
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     end,
   },
-
+  { 'stevanmilic/nvim-lspimport' },
+  { 'sindrets/diffview.nvim' },
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- put them in the right spots if you want.
@@ -849,5 +868,12 @@ vim.api.nvim_set_keymap('i', 'jk', '<Esc>', { noremap = true })
 vim.api.nvim_set_keymap('x', '<', '<gv', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('x', '>', '>gv', { noremap = true, silent = true })
 
+vim.opt.fillchars:append { diff = ' ' }
+
+-- Press <Leader>t to toggle NvimTree
+vim.api.nvim_set_keymap('n', '<Leader>va', ':DiffviewOpen<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>vc', ':DiffviewClose<CR>', { noremap = true, silent = true })
+
+vim.keymap.set('n', '<leader>cc', require('lspimport').import, { noremap = true })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
