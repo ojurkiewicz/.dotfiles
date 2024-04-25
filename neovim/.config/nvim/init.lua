@@ -30,8 +30,6 @@ require('lazy').setup({
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
 
-
-
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
@@ -240,6 +238,11 @@ require('lazy').setup({
   },
 
   {
+    'Almo7aya/openingh.nvim',
+    opts = {}
+  },
+
+  {
     "ThePrimeagen/refactoring.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -295,10 +298,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
+local actions = require("telescope.actions")
 require('telescope').setup {
   defaults = {
     mappings = {
       i = {
+        ["<esc>"] = actions.close,
         ['<C-u>'] = false,
         ['<C-d>'] = false,
       },
@@ -358,7 +363,7 @@ end, { desc = '[/] Fuzzily search in current buffer' })
 
 vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>sf',
-  function() require('telescope.builtin').find_files({ hidden = true, find_command = { 'rg', '--files', '--hidden', '-g', '!.git' } }) end,
+  function() require('telescope.builtin').find_files({ hidden = true, find_command = { 'rg', '--files', '--no-ignore', '-g', '!.git', '-g', '!node_modules', '-g', '!venv' } }) end,
   { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
@@ -599,7 +604,7 @@ cmp.setup {
 vim.api.nvim_set_keymap('i', 'jk', '<Esc>', { noremap = true })
 
 -- Press <Leader>e to toggle NvimTree
-vim.api.nvim_set_keymap('n', '<Leader>t', ':Oil<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>t', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader>pp', function()
   require('oil.actions').open_cwd()
@@ -649,6 +654,11 @@ vim.keymap.set({ "n", "x" }, "<leader>ri", function() require('refactoring').ref
 vim.keymap.set("n", "<leader>rb", function() require('refactoring').refactor('Extract Block') end)
 vim.keymap.set("n", "<leader>rbf", function() require('refactoring').refactor('Extract Block To File') end)
 -- Extract block supports only normal mode
+--
+-- This shouldn't be needed once neovim 0.10 is released
+vim.cmd [[
+au BufRead,BufNewFile *.tfvars set filetype=terraform 
+]]
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

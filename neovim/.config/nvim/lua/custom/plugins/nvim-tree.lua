@@ -9,6 +9,10 @@ return {
     require("nvim-tree").setup {
       view = {
         width = {min = 30, max = -1},
+      },
+      filters = { 
+        dotfiles = false,
+        git_ignored = false,
       }
     }
   end,
