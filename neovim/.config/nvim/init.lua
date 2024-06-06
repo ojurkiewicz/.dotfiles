@@ -214,44 +214,22 @@ require('lazy').setup({
       }
     end,
   },
-  {
-    'stevearc/oil.nvim',
-    opts = {},
-    -- Optional dependencies
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      require('oil').setup({
-        -- h oil-colums
-        columns = {
-          "icon",
-        },
-        delete_to_trash = true,
-        -- h oil-actions
-        keymaps = {
-          ["<leader>pp"] = "actions.open_cwd"
-        },
-        view_options = {
-          show_hidden = true,
-        }
-      })
-    end
-  },
 
   {
     'Almo7aya/openingh.nvim',
     opts = {}
   },
 
-  {
-    "ThePrimeagen/refactoring.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = function()
-      require("refactoring").setup()
-    end,
-  },
+	{
+		"mfussenegger/nvim-dap",
+		dependencies = {
+			"rcarriga/nvim-dap-ui",
+			"jay-babu/mason-nvim-dap.nvim",
+			"leoluz/nvim-dap-go",
+			{ "theHamsta/nvim-dap-virtual-text", config = true },
+			{ "LiadOz/nvim-dap-repl-highlights", config = true },
+		},
+	},
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -301,6 +279,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 local actions = require("telescope.actions")
 require('telescope').setup {
   defaults = {
+    wrap_results = true,
     mappings = {
       i = {
         ["<esc>"] = actions.close,
@@ -463,8 +442,8 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+  nmap('gr', function() require('telescope.builtin').lsp_references({ show_line = false }) end , '[G]oto [R]eferences')
+  nmap('gI', function() require('telescope.builtin').lsp_implementations({ show_line = false }) end, '[G]oto [I]mplementation')
   nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
