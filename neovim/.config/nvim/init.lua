@@ -454,9 +454,21 @@ require('lazy').setup({
             SignColumn = {bg = "black"},     -- Column where |signs| are displayed
           }
         })
-      vim.cmd("colorscheme gruvbox")
+      -- vim.cmd("colorscheme gruvbox")
     end,
 
+  },
+  {
+    "vague2k/vague.nvim",
+    config = function()
+      require("vague").setup({
+        -- optional configuration here
+        colors = {
+          bg = "#000000",
+        }
+      })
+      vim.cmd("colorscheme vague")
+    end
   },
 }, {})
 
