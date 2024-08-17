@@ -1,6 +1,5 @@
 require('options')
 
-
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -76,12 +75,12 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
       },
       'saadparwaiz1/cmp_luasnip',
@@ -123,11 +122,11 @@ require('lazy').setup({
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          -- ['<C-y>'] = cmp.mapping.confirm { select = true },
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
-          --['<CR>'] = cmp.mapping.confirm { select = true },
+          ['<CR>'] = cmp.mapping.confirm { select = true },
           --['<Tab>'] = cmp.mapping.select_next_item(),
           --['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
@@ -209,32 +208,12 @@ require('lazy').setup({
   },
 
   {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      on_colors = function(colors)
-        colors.bg = "#000000"
-        colors.bg_statusline = "#000000"
-        colors.bg_highlight = "#000000"
-        colors.bg_sidebar = "#000000"
-      end
-    },
-  },
-  -- { "ellisonleao/gruvbox.nvim",
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd("colorscheme gruvbox")
-  --   end,
-  -- },
-
-  {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     opts = {
       options = {
-        icons_enabled = false,
+        icons_enabled = true,
         theme = 'gruvbox',
         component_separators = '|',
         section_separators = '',
@@ -251,8 +230,9 @@ require('lazy').setup({
     opts = {},
   },
 
-  -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  -- TODO: Testing on 2024-07-11 if native Neovim implementation is as good
+  -- -- "gc" to comment visual regions/lines
+  -- { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -326,7 +306,35 @@ require('lazy').setup({
       name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
       dependencies = { 'nvim-treesitter/nvim-treesitter' },
       config = function()
-          require('render-markdown').setup({})
+          require('render-markdown').setup({
+          heading = {
+            -- Turn on / off heading icon & background rendering
+            enabled = false,
+            -- Turn on / off any sign column related rendering
+            sign = true,
+            -- Replaces '#+' of 'atx_h._marker'
+            -- The number of '#' in the heading determines the 'level'
+            -- The 'level' is used to index into the array using a cycle
+            -- The result is left padded with spaces to hide any additional '#'
+            icons = { '1. ', '2. ', '3. ', '4. ', '5. ', '6. ' },
+            -- Added to the sign column if enabled
+            -- The 'level' is used to index into the array using a cycle
+            signs = { '󰫎 ' },
+            -- The 'level' is used to index into the array using a clamp
+            -- Highlight for the heading icon and extends through the entire line
+            backgrounds = { 'DiffAdd', 'DiffChange', 'DiffDelete' },
+            -- The 'level' is used to index into the array using a clamp
+            -- Highlight for the heading and sign icons
+            foregrounds = {
+                '@markup.heading.1.markdown',
+                '@markup.heading.2.markdown',
+                '@markup.heading.3.markdown',
+                '@markup.heading.4.markdown',
+                '@markup.heading.5.markdown',
+                '@markup.heading.6.markdown',
+            },
+        },
+      })
       end,
   },
   {
@@ -359,6 +367,7 @@ require('lazy').setup({
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
       "fredrikaverpil/neotest-golang", -- Installation
+      "nvim-neotest/neotest-python", -- Installation
       "mfussenegger/nvim-dap",
       "rcarriga/nvim-dap-ui",
       "leoluz/nvim-dap-go",
@@ -368,6 +377,7 @@ require('lazy').setup({
       require("neotest").setup({
         adapters = {
           require("neotest-golang")(go_config), -- Registration
+          require("neotest-python")(go_config), -- Registration
         },
       })
     end,
@@ -400,7 +410,7 @@ require('lazy').setup({
       view = {
         width = {min = 30, max = -1},
       },
-      filters = { 
+      filters = {
         dotfiles = false,
         git_ignored = false,
       }
@@ -454,26 +464,25 @@ require('lazy').setup({
             SignColumn = {bg = "black"},     -- Column where |signs| are displayed
           }
         })
-      -- vim.cmd("colorscheme gruvbox")
+      vim.cmd("colorscheme gruvbox")
     end,
 
   },
-  {
-    "vague2k/vague.nvim",
-    config = function()
-      require("vague").setup({
-        -- optional configuration here
-        colors = {
-          bg = "#000000",
-        }
-      })
-      vim.cmd("colorscheme vague")
-    end
-  },
+  -- {
+  --   "vague2k/vague.nvim",
+  --   config = function()
+  --     require("vague").setup({
+  --       -- optional configuration here
+  --       colors = {
+  --         bg = "#000000",
+  --       }
+  --     })
+  --     -- vim.cmd("colorscheme vague")
+  --   end
+  -- },
 }, {})
 
 
--- vim.cmd("colorscheme tokyonight")
 
 -- [[ Basic Keymaps ]]
 
