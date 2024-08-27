@@ -214,7 +214,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = true,
-        theme = 'gruvbox',
+        theme = 'tokyonight',
         component_separators = '|',
         section_separators = '',
       },
@@ -394,6 +394,7 @@ require('lazy').setup({
 			"rcarriga/nvim-dap-ui",
 			"jay-babu/mason-nvim-dap.nvim",
 			"leoluz/nvim-dap-go",
+      "mfussenegger/nvim-dap-python",
 			{ "theHamsta/nvim-dap-virtual-text", config = true },
 			{ "LiadOz/nvim-dap-repl-highlights", config = true },
 		},
@@ -464,9 +465,8 @@ require('lazy').setup({
             SignColumn = {bg = "black"},     -- Column where |signs| are displayed
           }
         })
-      vim.cmd("colorscheme gruvbox")
+      -- vim.cmd("colorscheme gruvbox")
     end,
-
   },
   -- {
   --   "vague2k/vague.nvim",
@@ -477,13 +477,27 @@ require('lazy').setup({
   --         bg = "#000000",
   --       }
   --     })
-  --     -- vim.cmd("colorscheme vague")
+  --     vim.cmd("colorscheme vague")
   --   end
   -- },
+    {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      on_colors = function(colors)
+        colors.bg = "#000000"
+        colors.bg_statusline = "#000000"
+        colors.bg_highlight = "#000000"
+        colors.bg_sidebar = "#000000"
+      end
+    },
+  },
 }, {})
 
 
 
+vim.cmd("colorscheme tokyonight")
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -704,15 +718,22 @@ local on_attach = function(_, bufnr)
 end
 
 -- document existing key chains
-require('which-key').register {
-  ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
-  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-}
+require('which-key').add({
+    { "<leader>c", group = "[C]ode" },
+    { "<leader>c_", hidden = true },
+    { "<leader>d", group = "[D]ocument" },
+    { "<leader>d_", hidden = true },
+    { "<leader>g", group = "[G]it" },
+    { "<leader>g_", hidden = true },
+    { "<leader>h", group = "More git" },
+    { "<leader>h_", hidden = true },
+    { "<leader>r", group = "[R]ename" },
+    { "<leader>r_", hidden = true },
+    { "<leader>s", group = "[S]earch" },
+    { "<leader>s_", hidden = true },
+    { "<leader>w", group = "[W]orkspace" },
+    { "<leader>w_", hidden = true },
+})
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
@@ -889,6 +910,7 @@ vim.keymap.set("n", "<leader>rbf", function() require('refactoring').refactor('E
 vim.cmd [[
 au BufRead,BufNewFile *.tfvars set filetype=terraform 
 ]]
+require("dap-python").setup("python")
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
