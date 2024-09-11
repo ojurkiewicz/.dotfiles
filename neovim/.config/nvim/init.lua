@@ -167,18 +167,18 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',  opts = {} },
+  { 'folke/which-key.nvim',   opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       -- See `:help gitsigns.txt`
       signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
+        -- add = { text = '' },
+        -- change = { text = '' },
+        -- delete = { text = '' },
+        -- topdelete = { text = '' },
+        -- changedelete = { text = '' },
       },
       on_attach = function(bufnr)
         vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
@@ -272,7 +272,7 @@ require('lazy').setup({
         -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
+        additional_vim_regex_highlighting = { 'ruby', 'typst' },
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
@@ -302,40 +302,40 @@ require('lazy').setup({
     }
   },
   {
-      'MeanderingProgrammer/markdown.nvim',
-      name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
-      dependencies = { 'nvim-treesitter/nvim-treesitter' },
-      config = function()
-          require('render-markdown').setup({
-          heading = {
-            -- Turn on / off heading icon & background rendering
-            enabled = false,
-            -- Turn on / off any sign column related rendering
-            sign = true,
-            -- Replaces '#+' of 'atx_h._marker'
-            -- The number of '#' in the heading determines the 'level'
-            -- The 'level' is used to index into the array using a cycle
-            -- The result is left padded with spaces to hide any additional '#'
-            icons = { '1. ', '2. ', '3. ', '4. ', '5. ', '6. ' },
-            -- Added to the sign column if enabled
-            -- The 'level' is used to index into the array using a cycle
-            signs = { '󰫎 ' },
-            -- The 'level' is used to index into the array using a clamp
-            -- Highlight for the heading icon and extends through the entire line
-            backgrounds = { 'DiffAdd', 'DiffChange', 'DiffDelete' },
-            -- The 'level' is used to index into the array using a clamp
-            -- Highlight for the heading and sign icons
-            foregrounds = {
-                '@markup.heading.1.markdown',
-                '@markup.heading.2.markdown',
-                '@markup.heading.3.markdown',
-                '@markup.heading.4.markdown',
-                '@markup.heading.5.markdown',
-                '@markup.heading.6.markdown',
-            },
+    'MeanderingProgrammer/markdown.nvim',
+    name = 'render-markdown',   -- Only needed if you have another plugin named markdown.nvim
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('render-markdown').setup({
+        heading = {
+          -- Turn on / off heading icon & background rendering
+          enabled = false,
+          -- Turn on / off any sign column related rendering
+          sign = true,
+          -- Replaces '#+' of 'atx_h._marker'
+          -- The number of '#' in the heading determines the 'level'
+          -- The 'level' is used to index into the array using a cycle
+          -- The result is left padded with spaces to hide any additional '#'
+          icons = { '1. ', '2. ', '3. ', '4. ', '5. ', '6. ' },
+          -- Added to the sign column if enabled
+          -- The 'level' is used to index into the array using a cycle
+          signs = { '󰫎 ' },
+          -- The 'level' is used to index into the array using a clamp
+          -- Highlight for the heading icon and extends through the entire line
+          backgrounds = { 'DiffAdd', 'DiffChange', 'DiffDelete' },
+          -- The 'level' is used to index into the array using a clamp
+          -- Highlight for the heading and sign icons
+          foregrounds = {
+            '@markup.heading.1.markdown',
+            '@markup.heading.2.markdown',
+            '@markup.heading.3.markdown',
+            '@markup.heading.4.markdown',
+            '@markup.heading.5.markdown',
+            '@markup.heading.6.markdown',
+          },
         },
       })
-      end,
+    end,
   },
   {
     "nvim-neorg/neorg",
@@ -346,9 +346,9 @@ require('lazy').setup({
     config = function()
       require("neorg").setup {
         load = {
-          ["core.defaults"] = {}, -- Loads default behaviour
+          ["core.defaults"] = {},  -- Loads default behaviour
           ["core.concealer"] = {}, -- Adds pretty icons to your documents
-          ["core.dirman"] = { -- Manages Neorg workspaces
+          ["core.dirman"] = {      -- Manages Neorg workspaces
             config = {
               workspaces = {
                 notes = "~/notes",
@@ -357,6 +357,8 @@ require('lazy').setup({
           },
         },
       }
+        vim.wo.foldlevel = 99
+        vim.wo.conceallevel = 2
     end,
   },
   {
@@ -367,7 +369,7 @@ require('lazy').setup({
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
       "fredrikaverpil/neotest-golang", -- Installation
-      "nvim-neotest/neotest-python", -- Installation
+      "nvim-neotest/neotest-python",   -- Installation
       "mfussenegger/nvim-dap",
       "rcarriga/nvim-dap-ui",
       "leoluz/nvim-dap-go",
@@ -377,7 +379,7 @@ require('lazy').setup({
       require("neotest").setup({
         adapters = {
           require("neotest-golang")(go_config), -- Registration
-          require("neotest-python")(go_config), -- Registration
+          require("neotest-python"),            -- Registration
         },
       })
     end,
@@ -387,84 +389,106 @@ require('lazy').setup({
     'Almo7aya/openingh.nvim',
     opts = {}
   },
+  {'akinsho/git-conflict.nvim', version = "*", config = true},
 
-	{
-		"mfussenegger/nvim-dap",
-		dependencies = {
-			"rcarriga/nvim-dap-ui",
-			"jay-babu/mason-nvim-dap.nvim",
-			"leoluz/nvim-dap-go",
-      "mfussenegger/nvim-dap-python",
-			{ "theHamsta/nvim-dap-virtual-text", config = true },
-			{ "LiadOz/nvim-dap-repl-highlights", config = true },
-		},
-	},
-{
-  "nvim-tree/nvim-tree.lua",
-  version = "*",
-  lazy = false,
-  dependencies = {
-    "nvim-tree/nvim-web-devicons",
-  },
-  config = function()
-    require("nvim-tree").setup {
-      view = {
-        width = {min = 30, max = -1},
-      },
-      filters = {
-        dotfiles = false,
-        git_ignored = false,
-      }
-    }
-  end,
-},
-{
-  'ThePrimeagen/harpoon',
-  config = function()
-    require("harpoon").setup({
-        global_settings = {
-            save_on_toggle = true,
-            save_on_change = true,
-            enter_on_sendcmd = false,
-        },
-    })
-  end,
-},
   {
-  'github/copilot.vim',
-  config = function()
-     vim.cmd[[imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")]]
-     vim.cmd[[imap <silent><script><expr> <C-L> copilot#Next()]]
-     vim.cmd[[imap <silent><script><expr> <C-H> copilot#Previous()]]
-     vim.cmd[[let g:copilot_no_tab_map = v:true]]
-  end,
-},
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
-  -- require 'kickstart.plugins.autoformat',
-  require 'kickstart.plugins.debug',
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "jay-babu/mason-nvim-dap.nvim",
+      "leoluz/nvim-dap-go",
+      "mfussenegger/nvim-dap-python",
+      { "theHamsta/nvim-dap-virtual-text", config = true },
+      { "LiadOz/nvim-dap-repl-highlights", config = true },
+    },
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("nvim-tree").setup {
+        view = {
+          width = { min = 30, max = -1 },
+        },
+        filters = {
+          dotfiles = false,
+          git_ignored = false,
+        }
+      }
+    end,
+  },
+  {
+    'ThePrimeagen/harpoon',
+    config = function()
+      require("harpoon").setup({
+        global_settings = {
+          save_on_toggle = true,
+          save_on_change = true,
+          enter_on_sendcmd = false,
+        },
+      })
+    end,
+  },
+  {
+    'github/copilot.vim',
+    config = function()
+      vim.cmd [[imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")]]
+      vim.cmd [[imap <silent><script><expr> <C-L> copilot#Next()]]
+      vim.cmd [[imap <silent><script><expr> <C-H> copilot#Previous()]]
+      vim.cmd [[let g:copilot_no_tab_map = v:true]]
+    end,
+  },
+  {
+    "chrisgrieser/nvim-lsp-endhints",
+    event = "LspAttach",
+    opts = {}, -- required, even if empty
+    config = function()
+      require("lsp-endhints").setup {
+        icons = {
+          type = "󰜁 ",
+          parameter = "󰏪 ",
+          offspec = " ", -- hint kind not defined in official LSP spec
+          unknown = " ", -- hint kind is nil
+        },
+        label = {
+          padding = 1,
+          marginLeft = 0,
+          bracketedParameters = true,
+        },
+        autoEnableHints = true,
+      }
+    end,
+  },
+    -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
+    --       These are some example plugins that I've included in the kickstart repository.
+    --       Uncomment any of the lines below to enable them.
+    -- require 'kickstart.plugins.autoformat',
+    require 'kickstart.plugins.debug',
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  --
+    -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
+    --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
+    --    up-to-date with whatever is in the kickstart repo.
+    --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
+    --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   { import = 'custom.plugins' },
   {
     "ellisonleao/gruvbox.nvim",
     config = function()
       require("gruvbox").setup({
-          overrides={
-            ColorColumn = {bg = "black"},    -- It's used for the 'colorcolumn' highlight group
-            Normal = {bg = "black"},         -- Normal text
-            NormalNC = {bg = "black"},       -- Normal text in non-current windows
-            MsgArea = {bg = "black"},        -- Area for messages and cmdline
-            VertSplit = {bg = "black"},      -- The column separating vertically split windows
-            SignColumn = {bg = "black"},     -- Column where |signs| are displayed
-          }
-        })
+        overrides = {
+          ColorColumn = { bg = "black" }, -- It's used for the 'colorcolumn' highlight group
+          Normal = { bg = "black" },      -- Normal text
+          NormalNC = { bg = "black" },    -- Normal text in non-current windows
+          MsgArea = { bg = "black" },     -- Area for messages and cmdline
+          VertSplit = { bg = "black" },   -- The column separating vertically split windows
+          SignColumn = { bg = "black" },  -- Column where |signs| are displayed
+        }
+      })
       -- vim.cmd("colorscheme gruvbox")
     end,
   },
@@ -480,7 +504,7 @@ require('lazy').setup({
   --     vim.cmd("colorscheme vague")
   --   end
   -- },
-    {
+  {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
@@ -693,8 +717,9 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-  nmap('gr', function() require('telescope.builtin').lsp_references({ show_line = false }) end , '[G]oto [R]eferences')
-  nmap('gI', function() require('telescope.builtin').lsp_implementations({ show_line = false }) end, '[G]oto [I]mplementation')
+  nmap('gr', function() require('telescope.builtin').lsp_references({ show_line = false }) end, '[G]oto [R]eferences')
+  nmap('gI', function() require('telescope.builtin').lsp_implementations({ show_line = false }) end,
+    '[G]oto [I]mplementation')
   nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
@@ -719,20 +744,20 @@ end
 
 -- document existing key chains
 require('which-key').add({
-    { "<leader>c", group = "[C]ode" },
-    { "<leader>c_", hidden = true },
-    { "<leader>d", group = "[D]ocument" },
-    { "<leader>d_", hidden = true },
-    { "<leader>g", group = "[G]it" },
-    { "<leader>g_", hidden = true },
-    { "<leader>h", group = "More git" },
-    { "<leader>h_", hidden = true },
-    { "<leader>r", group = "[R]ename" },
-    { "<leader>r_", hidden = true },
-    { "<leader>s", group = "[S]earch" },
-    { "<leader>s_", hidden = true },
-    { "<leader>w", group = "[W]orkspace" },
-    { "<leader>w_", hidden = true },
+  { "<leader>c",  group = "[C]ode" },
+  { "<leader>c_", hidden = true },
+  { "<leader>d",  group = "[D]ocument" },
+  { "<leader>d_", hidden = true },
+  { "<leader>g",  group = "[G]it" },
+  { "<leader>g_", hidden = true },
+  { "<leader>h",  group = "More git" },
+  { "<leader>h_", hidden = true },
+  { "<leader>r",  group = "[R]ename" },
+  { "<leader>r_", hidden = true },
+  { "<leader>s",  group = "[S]earch" },
+  { "<leader>s_", hidden = true },
+  { "<leader>w",  group = "[W]orkspace" },
+  { "<leader>w_", hidden = true },
 })
 
 -- mason-lspconfig requires that these setup functions are called in this order
@@ -841,11 +866,11 @@ mason_lspconfig.setup_handlers {
 vim.api.nvim_set_keymap('i', 'jk', '<Esc>', { noremap = true })
 
 -- Press <Leader>e to toggle NvimTree
-vim.api.nvim_set_keymap('n', '<Leader>t', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>tt', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader>pp', function()
   require('oil.actions').open_cwd()
-end, {desc = "Open current working directory with Oil"})
+end, { desc = "Open current working directory with Oil" })
 
 -- Harpoon shortcuts
 vim.api.nvim_set_keymap('n', '<leader>ha', [[<cmd>lua require("harpoon.mark").add_file()<CR>]],
@@ -865,32 +890,30 @@ vim.api.nvim_set_keymap('n', '<leader>hh', [[<cmd>lua require("harpoon.ui").togg
 vim.api.nvim_set_keymap('n', '<leader>hq', [[<cmd>lua require("harpoon.tmux").gotoTerminal(1)<CR>]],
   { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('x', '<', '<gv', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('x', '>', '>gv', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('x', '<', '<gv', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('x', '>', '>gv', { noremap = true, silent = true })
 
 -- Neotest keymaps
 -- vim.api.nvim_set_keymap('n', '<Leader>tf', ':lua require("neotest").run.run(vim.fn.expand(\'%\'))<CR>', {})
 -- vim.api.nvim_set_keymap('n', '<Leader>td', ':lua require("neotest").run.run(vim.fn.expand(\'%:h\'))<CR>', {})
 -- vim.api.nvim_set_keymap('n', '<Leader>to', ':lua require("neotest").output.open()<CR>', {})
 
-vim.api.nvim_set_keymap('n', '<Leader>nt', ':lua require("neotest").run.run()<CR>', {desc = "Run all tests"})
+vim.api.nvim_set_keymap('n', '<Leader>nt', ':lua require("neotest").run.run()<CR>', { desc = "Run all tests" })
 vim.api.nvim_set_keymap('n', '<Leader>ns', ':lua require("neotest").summary.toggle()<CR>', {})
 
 
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "norg",
-    callback = function()
-        -- Assuming there's a command or function to disable Copilot,
-        -- Replace 'YourDisableCopilotCommand' with the actual command/function to disable Copilot.
-        vim.cmd('Copilot disable')
-    end,
+  pattern = { "norg", "markdown" },
+  callback = function()
+    vim.cmd('Copilot disable')
+  end,
 })
 
 vim.o.scrolloff = 20
 
-vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', {noremap = true})
-vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', { noremap = true })
 
 
 vim.keymap.set("x", "<leader>re", function() require('refactoring').refactor('Extract Function') end)
@@ -908,9 +931,42 @@ vim.keymap.set("n", "<leader>rbf", function() require('refactoring').refactor('E
 --
 -- This shouldn't be needed once neovim 0.10 is released
 vim.cmd [[
-au BufRead,BufNewFile *.tfvars set filetype=terraform 
+au BufRead,BufNewFile *.tfvars set filetype=terraform
 ]]
-require("dap-python").setup("python")
+require("dap-python").setup(
+  "python",
+  {
+    include_configs = true,
+    console = "internalConsole",
+  }
+)
+
+
+vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSignError' })
+vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })
+vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo' })
+vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
+
+vim.fn.sign_define('DapBreakpoint',
+    {
+        text='', -- nerdfonts icon here
+        texthl='DapBreakpointSymbol',
+        linehl='DapBreakpoint',
+        numhl='DapBreakpoint'
+    })
+-- Lua
+--
+vim.api.nvim_exec2([[
+  highlight MyDarkGray guibg=#282828 ctermbg=235
+]])
+
+vim.fn.sign_define('DapStopped',
+    {
+        text='', -- nerdfonts icon here
+        texthl='DapStoppedSymbol',
+        linehl='MyDarkGray',
+        numhl='DapBreakpoint'
+    })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
