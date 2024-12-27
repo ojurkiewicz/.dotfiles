@@ -301,6 +301,26 @@ require('lazy').setup({
       -- refer to the configuration section below
     }
   },
+{
+    "kdheepak/lazygit.nvim",
+    lazy = true,
+    cmd = {
+        "LazyGit",
+        "LazyGitConfig",
+        "LazyGitCurrentFile",
+        "LazyGitFilter",
+        "LazyGitFilterCurrentFile",
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+    },
+    -- setting the keybinding for LazyGit with 'keys' is recommended in
+    -- order to load the plugin when the command is run for the first time
+    keys = {
+        { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
+    }
+},
   {
     'MeanderingProgrammer/markdown.nvim',
     name = 'render-markdown',   -- Only needed if you have another plugin named markdown.nvim
@@ -954,11 +974,9 @@ vim.fn.sign_define('DapBreakpoint',
         linehl='DapBreakpoint',
         numhl='DapBreakpoint'
     })
--- Lua
---
-vim.api.nvim_exec2([[
-  highlight MyDarkGray guibg=#282828 ctermbg=235
-]])
+
+vim.api.nvim_set_hl(0, "MyDarkGray", { bg = "#282828", ctermbg = 235 })
+
 
 vim.fn.sign_define('DapStopped',
     {
