@@ -1,3 +1,4 @@
+export LANG="en_US.UTF-8"
 export PATH=~/.npm-global/bin:$PATH
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin

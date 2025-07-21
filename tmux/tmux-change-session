@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-session=$(tmux ls -F "#{session_name}" | fzf)
+session=$(tmux ls -F "#{session_name}" | fzf --tmux center)
 
 tmux switch-client -t $session
