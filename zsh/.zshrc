@@ -11,7 +11,14 @@ export FPATH=~/.zfunc:$FPATH
 # ------------
 source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
 
+if [[ -f $HOME/secrets ]]; then
+  . $HOME/secrets
+fi
+
 eval "$(starship init zsh)"
+
+export VISUAL=nvim
+export EDITOR="$VISUAL"
 
 alias ls="exa"
 alias cat="bat"
@@ -70,6 +77,7 @@ export PATH="/usr/local/texlive/2021basic/bin/x86_64-darwin:$PATH"
 
 fpath=(/usr/local/share/zsh/site-functions $fpath)
 
+export GPG_TTY=$(tty)
 
 # Automatically activate Python virtual environments in the directory
 function workon_cwd {
@@ -84,5 +92,29 @@ function workon_cwd {
 # Check the active directory whenever you navigate around
 add-zsh-hook chpwd workon_cwd
 
+
+bindkey '^P' up-history
+bindkey '^N' down-history
+
+
+# pnpm
+export PNPM_HOME="/Users/oktawian.jurkiewicz/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+#
+setopt extendedglob
+export PATH="/opt/homebrew/opt/go@1.21/bin:$PATH"
+set -o emacs
+
+alias python_homebrew='/opt/homebrew/bin/python3.11'
+
 # Initialize when shell starts 
 workon_cwd
+
+[[ -s "/Users/oktawian.jurkiewicz/.gvm/scripts/gvm" ]] && source "/Users/oktawian.jurkiewicz/.gvm/scripts/gvm"
+
+# Add Poetry to PATH
+export PATH="$HOME/Library/Application\ Support/pypoetry/venv/bin:$PATH"
