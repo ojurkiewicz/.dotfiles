@@ -21,7 +21,7 @@ eval "$(starship init zsh)"
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
-alias ls="exa"
+alias ls="eza"
 alias cat="bat"
 alias tt="~/tmux-sessionizer"
 alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
@@ -119,3 +119,4 @@ workon_cwd
 
 # Add Poetry to PATH
 export PATH="$HOME/Library/Application\ Support/pypoetry/venv/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"

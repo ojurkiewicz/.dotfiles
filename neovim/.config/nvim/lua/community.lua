@@ -9,4 +9,6 @@ return {
   -- import/override with your plugins folder
   { import = "astrocommunity.test.neotest" },
   { import = "astrocommunity.pack.go" },
+  { import = "astrocommunity.pack.python-ruff" },
+  { import = "astrocommunity.completion.copilot-lua-cmp" },
 }
